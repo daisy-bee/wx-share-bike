@@ -1,0 +1,8 @@
+page,view,image,swiper,swiper-item,navigator,viedo{
+  box-sizing: border-box;
+}
+
+page,.main{
+  height: 100%;
+  border:none;
+}
