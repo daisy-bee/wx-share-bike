@@ -1,5 +1,11 @@
 App({
 
+  globalData:{
+    //所有页面都可以访问的数据
+    userInfo:null,
+    status:0
+  },
+
   /**
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */

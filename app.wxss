@@ -1,3 +1,5 @@
+@import './style/weui.css';
+
 page,view,image,swiper,swiper-item,navigator,viedo{
   box-sizing: border-box;
 }

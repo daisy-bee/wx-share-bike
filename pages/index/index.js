@@ -110,42 +110,73 @@ Page({
     var that=this;
     var cid=e.controlId;
     switch(cid){
+      //点击扫码按钮
+      case 1:{
+        var status=getApp().globalData.status;
+        if(status==0){
+          wx.navigateTo({
+            url: '../register/register',
+          })
+        }
+        break;
+      }
       //点击回到原点按钮
       case 4:
         this.mapCtx.moveToLocation();
         break;
       //点击添加单车按钮
       case 6:
-        var bikes=that.data.markers;
-        bikes.push({
-          iconPath: '../../icons/bike.png',
-          width: 25,
-          height: 25,
-          longitude: that.data.longitude,
-          latitude: that.data.latitude
-        });
-        //把添加后的数据重新赋值
-        that.setData({
-          markers:bikes
+        // var bikes=that.data.markers;
+        //获取当前中心位置的坐标
+        that.mapCtx.getCenterLocation({
+          success: function(res){
+            var longitude=res.longitude;
+            var latitude=res.latitude;
+            // bikes.push({
+            //   iconPath: '../../icons/bike.png',
+            //   width: 25,
+            //   height: 25,
+            //   longitude: longitude,
+            //   latitude: latitude
+            // });
+            // //把添加后的数据重新赋值
+            // that.setData({
+            //   markers: bikes
+            // })
+
+            //发送请求，把数据存放到后台
+            wx.request({
+              url: 'http://localhost:8080/addBike',
+              data:{
+                longitude:longitude,
+                latitude:latitude
+              },
+              method:"POST",
+              success:function(res){
+                console.log(longitude+','+latitude)
+                console.log(res);
+              }
+            })
+          }
         })
         break;
     }
   },
 
   regionchange:function(e){
-    var that=this;
-    if(e.type=="end"){
-      this.mapCtx.getCenterLocation({
-        success:function(res){
-          var lat=res.latitude;
-          var lon=res.longitude;
-          that.setData({
-            latitude:lat,
-            longitude:lon
-          })         
-        }
-      })
-    }
+    // var that=this;
+    // if(e.type=="end"){
+    //   this.mapCtx.getCenterLocation({
+    //     success:function(res){
+    //       var lat=res.latitude;
+    //       var lon=res.longitude;
+    //       that.setData({
+    //         latitude:lat,
+    //         longitude:lon
+    //       })         
+    //     }
+    //   })
+    // }
   },
 
   /**
